@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 import { Button, Form, Container, Header } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 import "./App.css";
@@ -20,8 +21,16 @@ export default class App extends Component {
   };
 
   submitHandler = (e) => {
+    const urlSheet =
+      "https://sheet.best/api/sheets/c61fde93-3b48-4b8f-acd3-41d9edbdeb81";
+
+    e.preventDefault();
     e.preventDefault();
     console.log(this.state);
+
+    axios.post(urlSheet, this.state).then((response) => {
+      console.log(response);
+    });
   };
 
   render() {
