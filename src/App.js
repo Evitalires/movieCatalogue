@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Button, Form, Container, Header } from "semantic-ui-react";
+import Button from "./components/atoms/button/button";
+import { /* Button, */ Form, Container, Header } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 import "./App.css";
 
