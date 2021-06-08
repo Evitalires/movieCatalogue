@@ -1,7 +1,7 @@
 import React from "react";
 
 const MyMovies = () => {
-  return <div>Todas mis peliculas</div>;
+  return <div>Mis peliculas</div>;
 };
 
 export default MyMovies;

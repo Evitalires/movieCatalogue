@@ -1,0 +1,19 @@
+.card {
+  overflow: hidden;
+}
+.overlay {
+  background-color: #fff;
+  padding: 2rem;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  max-height: 100%;
+  transform: translateY(101%);
+  overflow-y: auto;
+  transition: transform 0.3s ease-in;
+}
+
+.card:hover .overlay {
+  transform: translateY(0);
+}
