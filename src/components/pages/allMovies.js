@@ -1,11 +1,9 @@
 import React from "react";
-import Card from "../ui/molecules/card/card";
+import Cards from "../ui/organisms/cards/cards";
 
-const AllMovies = () => {
+const AllMovies = ({ movies, pathImg, onScoreClick }) => {
   return (
-    <section>
-      <Card title="Uncharted" score="9.8" url="" />
-    </section>
+    <Cards movies={movies} pathImg={pathImg} onScoreClick={onScoreClick} />
   );
 };
 

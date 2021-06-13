@@ -8,14 +8,12 @@ import AddMovie from "./components/pages/addMovie";
 import AllMovies from "./components/pages/allMovies";
 import MyMovies from "./components/pages/myMovies";
 
-const API_URL =
-  "https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=2eb432ffbed462250f1e1cfc103ef208&page=1";
-const IMG_PATH = "https://image.tmdb.org/t/p/w400";
-const SEARCH_API =
-  "https://api.themoviedb.org/3/search/movie?api_key=2eb432ffbed462250f1e1cfc103ef208&query=";
+import { API_URL, IMG_PATH, SEARCH_API } from "./models/fetchMovies";
+
 const App = () => {
   const [searchValue, setSearchValue] = useState("");
   const [movies, setMovies] = useState([]);
+  const [favoriteMovies, setFavoriteMovies] = useState({});
 
   const getMovies = async (url) => {
     const res = await fetch(url);
@@ -25,16 +23,50 @@ const App = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(movies);
-    let newMovies;
-    if (searchValue && searchValue !== "") {
-      newMovies = getMovies(SEARCH_API + searchValue);
-    }
-    console.log(movies);
+    if (searchValue && searchValue !== "")
+      setMovies(getMovies(SEARCH_API + searchValue));
     setSearchValue("");
-    console.log(newMovies);
-    console.log(SEARCH_API + searchValue);
   };
+
+  const onScoreClick = (movie) => {
+    //filter if already exist
+    if (favoriteMovies.length >= 0) {
+      let newFavoriteMovies = [movie, ...favoriteMovies];
+      setFavoriteMovies(newFavoriteMovies);
+    } else {
+      setFavoriteMovies([movie]);
+    }
+  };
+
+  const showFavoriteMovies = () => {
+    if (favoriteMovies.length >= 0) {
+      return (
+        <AllMovies
+          movies={favoriteMovies}
+          pathImg={IMG_PATH}
+          onScoreClick={onScoreClick}
+        />
+      );
+    } else {
+      return <MyMovies />;
+    }
+  };
+
+  /* 
+  state for url
+  fixed header.
+  when submited change rout to movies.
+  Migrate app to JWT
+  sign in and log out pages.
+  Add Sheet DB 
+  Button for request another page of movies. 
+  */
+
+  useEffect(() => {
+    if (movies.length < 1) {
+      getMovies(API_URL);
+    }
+  });
 
   return (
     <Router>
@@ -50,12 +82,18 @@ const App = () => {
           My Movies
         </Link>
       </Menu>
-      <Route path="/myMovies" component={MyMovies} />
+      <Route path="/myMovies" exact render={showFavoriteMovies} />
       <Route path="/addMovie" component={AddMovie} />
       <Route
         path="/allMovies"
         exact
-        render={() => <AllMovies movies={movies} pathImg={IMG_PATH} />}
+        render={() => (
+          <AllMovies
+            movies={movies}
+            pathImg={IMG_PATH}
+            onScoreClick={onScoreClick}
+          />
+        )}
       />
     </Router>
   );

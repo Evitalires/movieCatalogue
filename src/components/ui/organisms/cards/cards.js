@@ -1,17 +1,19 @@
 import React from "react";
 import Card from "../../molecules/card/card";
 
-const Cards = ({ movies, pathImg }) => {
+const Cards = ({ movies, pathImg, onScoreClick }) => {
   return (
-    <section className="ui three column grid">
-      {movies.map(({ id, title, poster_path, vote_average, overview }) => (
-        <div key={id} className="column">
+    <section className="ui stackable three column grid">
+      {movies.map((movie, key) => (
+        <div key={movie.id} className="column">
           <Card
-            key={id}
-            title={title}
-            score={vote_average}
-            url={pathImg + poster_path}
-            overview={overview}
+            movie={movie}
+            key={movie.id}
+            title={movie.title}
+            score={movie.vote_average}
+            url={pathImg + movie.poster_path}
+            overview={movie.overview}
+            onScoreClick={onScoreClick}
           />
         </div>
       ))}
